@@ -4,19 +4,14 @@ import { ChatService } from 'src/app/providers/chat.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  constructor(private chatService: ChatService) {}
+  @Input() option = '';
+  ngOnInit(): void {}
 
-  constructor(private chatService:ChatService) { }
-  @Input() option = "";
-  ngOnInit(): void {
-  }
-
-  ingresar(provider:string){
-    console.log(provider);
-
+  ingresar(provider: string) {
     this.chatService.login();
-
   }
 }

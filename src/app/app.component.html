@@ -1,10 +1,18 @@
-<ng-container *ngIf="hasSelected">
+<ng-container *ngIf="hasSelected || chatService.usuario.uid">
   <div class="container main-container">
     <h1>Firechat</h1>
-    <app-login *ngIf="!chatService.usuario.uid" [option]="optionSelected"></app-login>
+    <app-login
+      *ngIf="!chatService.usuario.uid"
+      [option]="optionSelected"
+    ></app-login>
     <div class="col-md-12 text-right">
-      <button class="btn btn-outline-danger" (click)="chatService.logout()"
-        *ngIf="chatService.usuario.uid">Logout</button>
+      <button
+        class="btn btn-outline-danger"
+        (click)="chatService.logout(); hasSelected = false"
+        *ngIf="chatService.usuario.uid"
+      >
+        Logout
+      </button>
     </div>
 
     <div class="chat-window" *ngIf="chatService.usuario.uid">
@@ -13,12 +21,22 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="!hasSelected">
-  <div style="display: flex;flex-direction: row;">
-    <div *ngFor="let option of options" style="width: 300px;height:300px;background: purple; margin: 10px;display: flex;align-items: center;justify-content: center;"
-    (click)="selectOption(option)">
-      {{option}}
-  </div>
+<ng-container *ngIf="!hasSelected && !chatService.usuario.uid">
+  <div style="display: flex; flex-direction: row">
+    <div
+      *ngFor="let option of options"
+      style="
+        width: 300px;
+        height: 300px;
+        background: purple;
+        margin: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      "
+      (click)="selectOption(option)"
+    >
+      {{ option }}
+    </div>
   </div>
 </ng-container>
-

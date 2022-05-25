@@ -7,18 +7,24 @@ import { ChatService } from 'src/app/providers/chat.service';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
-  mensaje: string = "";
+  mensaje: string = '';
 
-  element:any;
+  element: any;
 
   constructor(public chatService: ChatService) {
-    console.log(this.chatService.option);
-
-    this.chatService.cargarMensajes().subscribe(()=>{
-      setTimeout(()=>{
-        this.element.scrollTop = this.element.scrollHeight;
-      },20);
-    });
+    if (this.chatService.option == 'Random') {
+      this.chatService.cargarMensajesRandom().subscribe(() => {
+        setTimeout(() => {
+          this.element.scrollTop = this.element.scrollHeight;
+        }, 20);
+      });
+    } else {
+      this.chatService.cargarMensajes().subscribe(() => {
+        setTimeout(() => {
+          this.element.scrollTop = this.element.scrollHeight;
+        }, 20);
+      });
+    }
   }
 
   ngOnInit(): void {
@@ -26,11 +32,9 @@ export class ChatComponent implements OnInit {
   }
 
   enviarMensaje() {
-    console.log(this.mensaje.length);
-
     if (this.mensaje.length !== 0) {
       this.chatService.agregarMensaje(this.mensaje);
-      this.mensaje = "";
+      this.mensaje = '';
     }
   }
 }
